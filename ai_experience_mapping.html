@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your AI Experience</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-background: #ffffff;
+            --color-surface: #f5fafa;
+            --color-border: #d1e7e7;
+            --color-text: #1a2332;
+            --color-text-secondary: #4a5568;
+            --color-primary: #6aabb5;
+            --color-primary-light: #8ac4ca;
+            --color-primary-dark: #5a9aa3;
+            --color-human: #d97706;
+            --color-human-light: #fbbf24;
+            --color-ai: #6aabb5;
+            --color-ai-light: #8ac4ca;
+            --color-neutral: #64748b;
+            --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-background);
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            color: var(--color-text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Add slight overlay to ensure text readability */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            background: rgba(255, 255, 255, 0.92);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 1.5rem;
+            background: var(--color-primary);
+            border-radius: 0.75rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header .subtitle {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        /* Simple Progress Bar */
+        .progress-simple {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--color-border);
+            transition: all 0.3s;
+        }
+
+        .progress-dot.active {
+            background: var(--color-primary);
+            transform: scale(1.2);
+        }
+
+        .progress-dot.completed {
+            background: var(--color-primary);
+        }
+
+        .progress-line {
+            width: 40px;
+            height: 2px;
+            background: var(--color-border);
+        }
+
+        .progress-line.completed {
+            background: var(--color-primary);
+        }
+
+        /* View Sections */
+        .view-section {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .view-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Panels */
+        .panel {
+            background: var(--color-surface);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--color-border);
+        }
+
+        .panel-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: 0.75rem;
+        }
+
+        .panel-intro {
+            font-size: 0.95rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .info-box {
+            background: #e8f4f4;
+            padding: 1.25rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--color-border);
+        }
+
+        .info-box-title {
+            font-weight: 600;
+            color: var(--color-primary-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .info-box-content {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .info-box-content p {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--color-text);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--color-background);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            color: var(--color-text);
+            font-size: 0.9rem;
+            font-family: var(--font-primary);
+            transition: all 0.2s;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(106, 171, 181, 0.15);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        /* Node Gallery - Rectangular Cards */
+        .nodes-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .node-card {
+            background: var(--color-background);
+            border: 2px solid;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .node-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .node-card.human {
+            border-color: var(--color-human);
+            background: #fffbeb;
+        }
+
+        .node-card.ai {
+            border-color: var(--color-ai);
+            background: #f0f7f7;
+        }
+
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .node-type-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 0.375rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .node-type-badge.human {
+            background: #fef3c7;
+            color: var(--color-human);
+        }
+
+        .node-type-badge.ai {
+            background: #d1f0f0;
+            color: var(--color-primary-dark);
+        }
+
+        .node-name {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .node-description {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            line-height: 1.5;
+        }
+
+        .node-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .btn-node-action {
+            flex: 1;
+            padding: 0.4rem 0.75rem;
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid var(--color-border);
+            background: var(--color-background);
+            color: var(--color-text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-node-action:hover {
+            background: var(--color-surface);
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        /* Circular Guided Steps */
+        .guided-steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .guided-step-circle {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1.5rem;
+            border: 3px dashed;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guided-step-circle.human {
+            border-color: var(--color-human);
+            background: #fffbeb;
+        }
+
+        .guided-step-circle.human:hover {
+            background: #fef3c7;
+            border-style: solid;
+        }
+
+        .guided-step-circle.ai {
+            border-color: var(--color-ai);
+            background: #f0f7f7;
+        }
+
+        .guided-step-circle.ai:hover {
+            background: #d1f0f0;
+            border-style: solid;
+        }
+
+        .guided-step-circle.any {
+            border-color: var(--color-border);
+            background: var(--color-surface);
+        }
+
+        .guided-step-circle.any:hover {
+            background: #e8f4f4;
+            border-style: solid;
+            border-color: var(--color-primary);
+        }
+
+        .guided-step-circle .step-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .guided-step-circle .step-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text);
+            line-height: 1.3;
+        }
+
+        .guided-step-circle .step-hint {
+            font-size: 0.7rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Pattern Web Visualization */
+        .pattern-web {
+            background: linear-gradient(135deg, #f8fbfb 0%, #f0f7f7 100%);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            min-height: 400px;
+            border: 1px solid var(--color-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .web-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.7rem;
+            color: white;
+            text-align: center;
+            z-index: 10;
+            line-height: 1.2;
+        }
+
+        .web-svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .web-node {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            z-index: 10;
+            padding: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            line-height: 1.2;
+            border: 3px solid;
+            background: var(--color-background);
+        }
+
+        .web-node.human {
+            border-color: var(--color-human);
+            color: var(--color-human);
+            background: #fffbeb;
+        }
+
+        .web-node.ai {
+            border-color: var(--color-ai);
+            color: var(--color-primary-dark);
+            background: #f0f7f7;
+        }
+
+        .web-node:hover {
+            transform: scale(1.08);
+            z-index: 20;
+        }
+
+        .web-node.selected {
+            transform: scale(1.12);
+            z-index: 30;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Connection Helper Popup */
+        .connection-helper {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            max-width: 240px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            font-size: 0.85rem;
+        }
+
+        .connection-helper-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--color-text);
+        }
+
+        .connection-helper-steps {
+            color: var(--color-text-secondary);
+            font-size: 0.8rem;
+        }
+
+        .connection-helper-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .connection-helper-number {
+            background: var(--color-primary);
+            color: white;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .connection-helper-dismiss {
+            margin-top: 0.75rem;
+            width: 100%;
+            padding: 0.4rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            cursor: pointer;
+        }
+
+        .connection-helper-dismiss:hover {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .connection-panel {
+            background: var(--color-background);
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .connection-panel:hover {
+            border-color: var(--color-primary);
+        }
+
+        .connection-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .connection-path {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-text);
+        }
+
+        .strength-badge {
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--color-surface);
+            color: var(--color-text-secondary);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--color-primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:disabled {
+            background: #b8d4d8;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid var(--color-border);
+            border-radius: 0.5rem;
+            background: var(--color-background);
+            color: var(--color-text);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            font-family: var(--font-primary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--color-background);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .type-card {
+            padding: 1.25rem;
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            background: var(--color-surface);
+        }
+
+        .type-card.selected.human {
+            border-color: var(--color-human);
+            background: #fffbeb;
+        }
+
+        .type-card.selected.ai {
+            border-color: var(--color-ai);
+            background: #f0f7f7;
+        }
+
+        .type-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .type-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .type-description {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .sentiment-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sentiment-card {
+            padding: 0.75rem;
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            background: var(--color-surface);
+        }
+
+        .sentiment-card.selected {
+            border-color: var(--color-primary);
+            background: #e8f4f4;
+        }
+
+        .sentiment-emoji {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .sentiment-label {
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .strength-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .strength-card {
+            padding: 0.75rem;
+            border: 2px solid var(--color-border);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            background: var(--color-surface);
+        }
+
+        .strength-card.selected {
+            border-color: var(--color-primary);
+            background: #e8f4f4;
+        }
+
+        .strength-symbol {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .strength-label {
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .selection-notice {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--color-primary);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(106, 171, 181, 0.4);
+            z-index: 100;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .selection-notice.active {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .guided-steps-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .type-selector,
+            .sentiment-selector,
+            .strength-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .nodes-gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Share Your AI Experience</h1>
+            <p class="subtitle">Your perspective matters. Help us understand how students really use AI.</p>
+        </div>
+
+        <!-- Simple Progress -->
+        <div class="progress-simple" id="progressBar">
+            <div class="progress-dot active" data-step="1"></div>
+            <div class="progress-line" data-line="1"></div>
+            <div class="progress-dot" data-step="2"></div>
+            <div class="progress-line" data-line="2"></div>
+            <div class="progress-dot" data-step="3"></div>
+            <div class="progress-line" data-line="3"></div>
+            <div class="progress-dot" data-step="4"></div>
+            <div class="progress-line" data-line="4"></div>
+            <div class="progress-dot" data-step="5"></div>
+        </div>
+
+        <!-- Chapter 1: Welcome & Consent -->
+        <div id="chapter-1" class="view-section active">
+            <div class="panel">
+                <h2 class="panel-title">Welcome!</h2>
+                <p class="panel-intro">
+                    Thank you for participating. We want to learn about your experience using AI for learning, 
+                    thinking, and creating.
+                </p>
+
+                <div class="info-box">
+                    <div class="info-box-title">What you will do (10 to 20 minutes)</div>
+                    <div class="info-box-content">
+                        <p><strong>1.</strong> Share a bit about yourself and how you currently think about AI</p>
+                        <p><strong>2.</strong> Map patterns from a recent time you used AI</p>
+                        <p><strong>3.</strong> Imagine and map a future scenario with AI</p>
+                        <p><strong>4.</strong> Reflect on what you noticed</p>
+                        <p style="margin-top: 0.75rem; font-size: 0.85rem; color: var(--color-text-secondary);">
+                            You can use your phone, but a laptop or tablet is recommended for the best experience.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="panel" style="background: var(--color-background);">
+                    <h3 style="font-size: 1rem; margin-bottom: 0.75rem;">About This Study</h3>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem;">
+                        <strong>What we are studying:</strong> We want to hear about your experience using AI. 
+                        Your insights will help us understand how students use AI in their learning and creative work.
+                    </p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem;">
+                        <strong>Your rights:</strong> Participation is completely voluntary. You can stop at any time. 
+                        All responses are anonymous.
+                    </p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem;">
+                        <strong>How we will use your data:</strong> We are building a community and resources for 
+                        learners and students. Your responses will help us design better tools and may be shared 
+                        in academic publications (always anonymously).
+                    </p>
+                    <p style="margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem;">
+                        <strong>Questions?</strong> Contact us at <a href="mailto:info@debiasme.com" style="color: var(--color-primary);">info@debiasme.com</a>
+                    </p>
+                    
+                    <div class="form-group" style="margin-top: 1.5rem; margin-bottom: 0;">
+                        <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="consentCheck" style="width: 18px; height: 18px; cursor: pointer;">
+                            <span style="font-weight: 500; font-size: 0.9rem;">I understand the above and agree to participate</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn-primary" id="startBtn" disabled>
+                    Begin →
+                </button>
+            </div>
+        </div>
+
+        <!-- Chapter 2: Background & Before Questions -->
+        <div id="chapter-2" class="view-section">
+            <div class="panel">
+                <h2 class="panel-title">About You</h2>
+                
+                <div class="form-group">
+                    <label class="form-label">Which university do you attend?</label>
+                    <input type="text" class="form-input" id="university">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">What is your field of study?</label>
+                    <input type="text" class="form-input" id="field">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">What year are you in?</label>
+                    <select class="form-select" id="year">
+                        <option value="">Select</option>
+                        <option value="1">1st Year Undergraduate</option>
+                        <option value="2">2nd Year Undergraduate</option>
+                        <option value="3">3rd Year Undergraduate</option>
+                        <option value="4">4th Year+ Undergraduate</option>
+                        <option value="masters">Masters</option>
+                        <option value="phd">PhD</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">Your Current Thinking</h2>
+                <p class="panel-intro">
+                    Before we begin, we would like to understand your current perspective on AI.
+                </p>
+
+                <div class="form-group">
+                    <label class="form-label">When you use AI, where do you think patterns in the outputs come from?</label>
+                    <select class="form-select" id="beforeMentalModel">
+                        <option value="">Select what feels closest to your current thinking</option>
+                        <option value="inherent">They are built into the AI system</option>
+                        <option value="user-driven">They come from how I phrase my questions</option>
+                        <option value="independent">AI has its tendencies, I have mine, they are separate</option>
+                        <option value="one-way">AI shapes my thinking, but I do not shape its outputs</option>
+                        <option value="interactive">My approach and AI responses influence each other</option>
+                        <option value="co-constructed">We create outputs together through back and forth</option>
+                        <option value="systemic">They come from larger systems (training data, society, etc.)</option>
+                        <option value="other">Something else</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="beforeOtherGroup" style="display: none;">
+                    <label class="form-label">Please describe your view</label>
+                    <input type="text" class="form-input" id="beforeMentalModelOther">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Which AI tools do you use?</label>
+                    <textarea class="form-textarea" id="aiToolsUsed" 
+                              placeholder="For example: ChatGPT for writing, GitHub Copilot for coding, Gemini for research..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">How would you describe your experience with AI?</label>
+                    <select class="form-select" id="aiExperience">
+                        <option value="">Select</option>
+                        <option value="beginner">Just getting started</option>
+                        <option value="intermediate">Regular user for specific tasks</option>
+                        <option value="advanced">Frequent user across many contexts</option>
+                        <option value="expert">Deep experience with critical approach</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn-primary" id="continueToCurrentBtn">
+                    Continue →
+                </button>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Current Scenario -->
+        <div id="chapter-3" class="view-section">
+            <div class="panel">
+                <h2 class="panel-title">A Recent Time You Used AI</h2>
+                <p class="panel-intro">
+                    Think of a specific time you used AI in the past couple of weeks.
+                </p>
+
+                <div class="form-group">
+                    <label class="form-label">What were you working on?</label>
+                    <textarea class="form-textarea" id="currentContext" 
+                              placeholder="Describe the situation: what you were trying to do, what challenge you faced..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Which AI tool did you use?</label>
+                    <input type="text" class="form-input" id="currentTool">
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">Map the Patterns</h2>
+                <p class="panel-intro">
+                    Identify patterns that shaped this experience. Click on a circle to add a pattern.
+                </p>
+
+                <!-- Circular Guided Steps -->
+                <div class="guided-steps-container" id="currentGuidedSteps">
+                    <div class="guided-step-circle human" id="currentAddHumanBtn">
+                        <span class="step-icon">🧠</span>
+                        <span class="step-label">Your Pattern</span>
+                        <span class="step-hint">Click to add</span>
+                    </div>
+                    
+                    <div class="guided-step-circle ai" id="currentAddAIBtn">
+                        <span class="step-icon">🤖</span>
+                        <span class="step-label">AI Pattern</span>
+                        <span class="step-hint">Click to add</span>
+                    </div>
+
+                    <div class="guided-step-circle any" id="currentAddAnyBtn" style="display: none;">
+                        <span class="step-icon">+</span>
+                        <span class="step-label">Add More</span>
+                        <span class="step-hint">Optional</span>
+                    </div>
+                </div>
+
+                <div class="nodes-gallery" id="currentNodesGallery"></div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn-primary" id="currentContinueToMappingBtn" style="display: none;">
+                    Map Connections →
+                </button>
+            </div>
+
+            <!-- Connection Mapping -->
+            <div id="currentMappingSection" style="display: none;">
+                <div class="panel">
+                    <h2 class="panel-title">Connect the Patterns</h2>
+                    <p class="panel-intro">
+                        Click on one pattern, then another to draw a connection.
+                    </p>
+                </div>
+
+                <div class="pattern-web" id="currentPatternWeb">
+                    <div class="connection-helper" id="currentConnectionHelper">
+                        <div class="connection-helper-title">How to connect</div>
+                        <div class="connection-helper-steps">
+                            <div class="connection-helper-step">
+                                <span class="connection-helper-number">1</span>
+                                <span>Click any pattern</span>
+                            </div>
+                            <div class="connection-helper-step">
+                                <span class="connection-helper-number">2</span>
+                                <span>Click another to connect</span>
+                            </div>
+                            <div class="connection-helper-step">
+                                <span class="connection-helper-number">3</span>
+                                <span>Describe the relationship</span>
+                            </div>
+                        </div>
+                        <button class="connection-helper-dismiss" onclick="dismissHelper('current')">Got it</button>
+                    </div>
+                    <div class="web-center">Your<br>Experience</div>
+                    <svg class="web-svg" id="currentSvg"></svg>
+                </div>
+
+                <div id="currentConnectionsPanel"></div>
+
+                <div class="text-center" style="margin-top: 1.5rem;">
+                    <button class="btn-primary" id="continueToFutureBtn">
+                        Continue to Future Scenario →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Future Scenario -->
+        <div id="chapter-4" class="view-section">
+            <div class="panel">
+                <h2 class="panel-title">Imagine the Distant Future</h2>
+                <p class="panel-intro">
+                    Imagine 5 to 10 years from now, when AI has evolved significantly. 
+                    What would your ideal AI experience look like?
+                </p>
+
+                <div class="form-group">
+                    <label class="form-label">Describe your imagined future scenario</label>
+                    <textarea class="form-textarea" id="futureContext" 
+                              placeholder="What challenge or task? How would AI support your thinking in ways that are not possible today?"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">What AI capabilities would you want to exist?</label>
+                    <input type="text" class="form-input" id="futureTool">
+                </div>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">Map the Envisioned Patterns</h2>
+                <p class="panel-intro">
+                    What patterns would you want to see (or avoid) in this future scenario?
+                </p>
+
+                <!-- Circular Guided Steps -->
+                <div class="guided-steps-container" id="futureGuidedSteps">
+                    <div class="guided-step-circle human" id="futureAddHumanBtn">
+                        <span class="step-icon">🧠</span>
+                        <span class="step-label">Your Pattern</span>
+                        <span class="step-hint">Click to add</span>
+                    </div>
+                    
+                    <div class="guided-step-circle ai" id="futureAddAIBtn">
+                        <span class="step-icon">🤖</span>
+                        <span class="step-label">AI Pattern</span>
+                        <span class="step-hint">Click to add</span>
+                    </div>
+
+                    <div class="guided-step-circle any" id="futureAddAnyBtn" style="display: none;">
+                        <span class="step-icon">+</span>
+                        <span class="step-label">Add More</span>
+                        <span class="step-hint">Optional</span>
+                    </div>
+                </div>
+
+                <div class="nodes-gallery" id="futureNodesGallery"></div>
+            </div>
+
+            <div class="text-center">
+                <button class="btn-primary" id="futureContinueToMappingBtn" style="display: none;">
+                    Map Connections →
+                </button>
+            </div>
+
+            <!-- Connection Mapping -->
+            <div id="futureMappingSection" style="display: none;">
+                <div class="panel">
+                    <h2 class="panel-title">Connect the Patterns</h2>
+                    <p class="panel-intro">
+                        In your envisioned future, how would these patterns relate to each other?
+                    </p>
+                </div>
+
+                <div class="pattern-web" id="futurePatternWeb">
+                    <div class="connection-helper" id="futureConnectionHelper">
+                        <div class="connection-helper-title">How to connect</div>
+                        <div class="connection-helper-steps">
+                            <div class="connection-helper-step">
+                                <span class="connection-helper-number">1</span>
+                                <span>Click any pattern</span>
+                            </div>
+                            <div class="connection-helper-step">
+                                <span class="connection-helper-number">2</span>
+                                <span>Click another to connect</span>
+                            </div>
+                            <div class="connection-helper-step">
+                                <span class="connection-helper-number">3</span>
+                                <span>Describe the relationship</span>
+                            </div>
+                        </div>
+                        <button class="connection-helper-dismiss" onclick="dismissHelper('future')">Got it</button>
+                    </div>
+                    <div class="web-center">Your<br>Vision</div>
+                    <svg class="web-svg" id="futureSvg"></svg>
+                </div>
+
+                <div id="futureConnectionsPanel"></div>
+
+                <div class="text-center" style="margin-top: 1.5rem;">
+                    <button class="btn-primary" id="continueToReflectionBtn">
+                        Continue to Reflection →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Reflection -->
+        <div id="chapter-5" class="view-section">
+            <div class="panel">
+                <h2 class="panel-title">Looking Back</h2>
+
+                <div class="form-group">
+                    <label class="form-label">After this exercise: Where do you now think patterns in AI outputs come from?</label>
+                    <select class="form-select" id="afterMentalModel">
+                        <option value="">Select what feels closest to your thinking now</option>
+                        <option value="inherent">They are built into the AI system</option>
+                        <option value="user-driven">They come from how I phrase my questions</option>
+                        <option value="independent">AI has its tendencies, I have mine, they are separate</option>
+                        <option value="one-way">AI shapes my thinking, but I do not shape its outputs</option>
+                        <option value="interactive">My approach and AI responses influence each other</option>
+                        <option value="co-constructed">We create outputs together through back and forth</option>
+                        <option value="systemic">They come from larger systems (training data, society, etc.)</option>
+                        <option value="other">Something else</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="afterOtherGroup" style="display: none;">
+                    <label class="form-label">Please describe</label>
+                    <input type="text" class="form-input" id="afterMentalModelOther">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">What was most helpful about this exercise?</label>
+                    <select class="form-select" id="reflectionValuable">
+                        <option value="">Select what resonated most</option>
+                        <option value="awareness">Becoming aware of patterns I had not noticed</option>
+                        <option value="naming">Putting words to vague feelings</option>
+                        <option value="connections">Seeing how patterns relate to each other</option>
+                        <option value="comparison">Comparing present and future</option>
+                        <option value="visualization">Having a visual map</option>
+                        <option value="reflection">Taking time to reflect deliberately</option>
+                        <option value="agency">Realizing I have more influence than I thought</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">How could this exercise be improved? (Select any that apply)</label>
+                    <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.75rem;">
+                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="feedbackClear" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>It helped me notice things I had not thought about before</span>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="feedbackPrompts" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>I was not sure what counted as a "pattern"</span>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="feedbackReflection" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>I wanted more time or space to reflect</span>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="feedbackFuture" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>The future scenario was hard to imagine</span>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="feedbackValue" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>I am not sure how this will help me use AI better</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Any other thoughts? (Optional)</label>
+                    <textarea class="form-textarea" id="reflectionFeedback"></textarea>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-box-title">Stay connected</div>
+                    <div class="info-box-content">
+                        <p>We are building a community around understanding how people use AI. 
+                           If you would like to hear about what we learn or participate in future research, please share your email.</p>
+                        
+                        <label style="display: flex; align-items: center; gap: 0.6rem; margin-top: 0.75rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="wantContact" style="width: 16px; height: 16px; cursor: pointer;">
+                            <span>Yes, keep me updated</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="contactFields" style="display: none; margin-top: 1rem;">
+                    <div class="form-group">
+                        <label class="form-label">Email address</label>
+                        <input type="email" class="form-input" id="contactEmail">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Name (optional)</label>
+                        <input type="text" class="form-input" id="contactName">
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel" style="background: var(--color-primary); color: white;">
+                <p style="text-align: center; font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                    Thank you for sharing your experience! Your insights will help us design better tools for learners and students.
+                </p>
+                
+                <div class="text-center">
+                    <button class="btn-primary" id="submitBtn" style="background: white; color: var(--color-primary);">
+                        Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Selection Notice -->
+        <div id="selectionNotice" class="selection-notice">
+            <span id="selectedNodeName"></span> selected. Click another to connect.
+            <button class="btn-secondary" id="cancelSelectionBtn" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Node Modal -->
+    <div id="nodeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Create a Pattern</h3>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Is this about your thinking or the AI?</label>
+                <div class="type-selector">
+                    <div class="type-card human" data-type="human">
+                        <div class="type-emoji">🧠</div>
+                        <div class="type-label">Your Pattern</div>
+                        <p class="type-description">Your thinking, approach, assumptions</p>
+                    </div>
+                    <div class="type-card ai" data-type="ai">
+                        <div class="type-emoji">🤖</div>
+                        <div class="type-label">AI Pattern</div>
+                        <p class="type-description">AI behavior, responses, characteristics</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">How would you characterize this pattern?</label>
+                <div class="sentiment-selector">
+                    <div class="sentiment-card" data-sentiment="helpful">
+                        <div class="sentiment-emoji">✨</div>
+                        <div class="sentiment-label">Helpful</div>
+                    </div>
+                    <div class="sentiment-card" data-sentiment="neutral">
+                        <div class="sentiment-emoji">➖</div>
+                        <div class="sentiment-label">Neutral</div>
+                    </div>
+                    <div class="sentiment-card" data-sentiment="problematic">
+                        <div class="sentiment-emoji">⚠️</div>
+                        <div class="sentiment-label">Problematic</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Name this pattern</label>
+                <input type="text" class="form-input" id="nodeName">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Describe what you noticed</label>
+                <textarea class="form-textarea" id="nodeDescription" 
+                          placeholder="What happened? Why does it matter?"></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="saveNodeBtn" style="flex: 1;">
+                    Save
+                </button>
+                <button class="btn-secondary" id="cancelNodeBtn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Modal -->
+    <div id="connectionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Describe the Connection</h3>
+                <p style="color: var(--color-text-secondary); font-size: 0.9rem;">
+                    <span style="font-weight: 600;" id="connectionFrom"></span>
+                    ↔
+                    <span style="font-weight: 600;" id="connectionTo"></span>
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">How strong is this connection?</label>
+                <div class="strength-selector">
+                    <div class="strength-card" data-strength="weak">
+                        <div class="strength-symbol">· · ·</div>
+                        <div class="strength-label">Weak</div>
+                    </div>
+                    <div class="strength-card" data-strength="medium">
+                        <div class="strength-symbol">— —</div>
+                        <div class="strength-label">Medium</div>
+                    </div>
+                    <div class="strength-card" data-strength="strong">
+                        <div class="strength-symbol">───</div>
+                        <div class="strength-label">Strong</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Describe how they are related</label>
+                <textarea class="form-textarea" id="connectionDescription" 
+                          placeholder="Do they reinforce each other? Lead to specific outcomes?"></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="saveConnectionBtn" style="flex: 1;">
+                    Save
+                </button>
+                <button class="btn-secondary" id="deleteConnectionBtn">
+                    Delete
+                </button>
+                <button class="btn-secondary" id="cancelConnectionBtn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden Netlify Form -->
+    <form name="ai-experience-mapping" netlify netlify-honeypot="bot-field" hidden>
+        <input type="text" name="timestamp">
+        <input type="text" name="sessionId">
+        <textarea name="demographics"></textarea>
+        <textarea name="beforePerspectives"></textarea>
+        <textarea name="currentScenario"></textarea>
+        <textarea name="futureScenario"></textarea>
+        <textarea name="reflections"></textarea>
+        <textarea name="contact"></textarea>
+        <textarea name="processData"></textarea>
+    </form>
+
+    <script>
+        // ===============================================
+        // STATE MANAGEMENT
+        // ===============================================
+        
+        const appState = {
+            sessionId: 'map_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            startTime: Date.now(),
+            currentChapter: 1,
+            activeScenario: 'current',
+            demographics: {},
+            beforePerspectives: {},
+            scenarios: {
+                current: {
+                    context: {},
+                    nodes: [],
+                    connections: [],
+                    selectedNode: null,
+                    editingNode: null,
+                    editingConnection: null
+                },
+                future: {
+                    context: {},
+                    nodes: [],
+                    connections: [],
+                    selectedNode: null,
+                    editingNode: null,
+                    editingConnection: null
+                }
+            },
+            reflections: {},
+            contact: {},
+            processData: {
+                timePerChapter: {},
+                editHistory: []
+            }
+        };
+
+        // ===============================================
+        // UTILITY FUNCTIONS
+        // ===============================================
+        
+        function trackTime(chapter) {
+            if (!appState.processData.timePerChapter[chapter]) {
+                appState.processData.timePerChapter[chapter] = { start: Date.now() };
+            } else {
+                appState.processData.timePerChapter[chapter].end = Date.now();
+            }
+        }
+
+        function logEdit(action, data) {
+            appState.processData.editHistory.push({
+                timestamp: Date.now(),
+                scenario: appState.activeScenario,
+                action: action,
+                data: data
+            });
+        }
+
+        function getCurrentScenario() {
+            return appState.scenarios[appState.activeScenario];
+        }
+
+        window.dismissHelper = function(scenario) {
+            const helper = document.getElementById(scenario + 'ConnectionHelper');
+            if (helper) helper.style.display = 'none';
+        };
+
+        // ===============================================
+        // NAVIGATION
+        // ===============================================
+        
+        function switchChapter(chapterNum) {
+            trackTime(appState.currentChapter);
+            
+            document.querySelectorAll('.view-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById('chapter-' + chapterNum).classList.add('active');
+            
+            // Update simple progress dots
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                const stepNum = index + 1;
+                dot.classList.remove('active', 'completed');
+                if (stepNum === chapterNum) {
+                    dot.classList.add('active');
+                } else if (stepNum < chapterNum) {
+                    dot.classList.add('completed');
+                }
+            });
+            
+            document.querySelectorAll('.progress-line').forEach((line, index) => {
+                const lineNum = index + 1;
+                line.classList.remove('completed');
+                if (lineNum < chapterNum) {
+                    line.classList.add('completed');
+                }
+            });
+            
+            appState.currentChapter = chapterNum;
+            
+            if (chapterNum === 3) {
+                appState.activeScenario = 'current';
+                renderNodesGallery('current');
+            } else if (chapterNum === 4) {
+                appState.activeScenario = 'future';
+                renderNodesGallery('future');
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            trackTime(chapterNum);
+        }
+
+        // ===============================================
+        // NODE GALLERY RENDERING
+        // ===============================================
+        
+        function renderNodesGallery(scenarioName) {
+            const scenario = appState.scenarios[scenarioName];
+            const gallery = document.getElementById(scenarioName + 'NodesGallery');
+            const sentimentEmojis = { helpful: '✨', neutral: '➖', problematic: '⚠️' };
+            
+            if (scenario.nodes.length === 0) {
+                gallery.innerHTML = '';
+            } else {
+                gallery.innerHTML = scenario.nodes.map(node => `
+                    <div class="node-card ${node.type}">
+                        <div class="node-header">
+                            <span class="node-type-badge ${node.type}">
+                                ${node.type === 'human' ? '🧠 You' : '🤖 AI'}
+                            </span>
+                            <span style="font-size: 1rem;">${sentimentEmojis[node.sentiment]}</span>
+                        </div>
+                        <h4 class="node-name">${node.name}</h4>
+                        <p class="node-description">${node.description}</p>
+                        <div class="node-actions">
+                            <button class="btn-node-action" onclick="editNode('${scenarioName}', ${node.id})">Edit</button>
+                            <button class="btn-node-action" onclick="deleteNode('${scenarioName}', ${node.id})">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            updateGuidedSteps(scenarioName);
+        }
+
+        function updateGuidedSteps(scenarioName) {
+            const scenario = appState.scenarios[scenarioName];
+            const hasHuman = scenario.nodes.some(n => n.type === 'human');
+            const hasAI = scenario.nodes.some(n => n.type === 'ai');
+            
+            const humanBtn = document.getElementById(scenarioName + 'AddHumanBtn');
+            const aiBtn = document.getElementById(scenarioName + 'AddAIBtn');
+            const anyBtn = document.getElementById(scenarioName + 'AddAnyBtn');
+            const continueBtn = document.getElementById(scenarioName + 'ContinueToMappingBtn');
+            
+            if (humanBtn) humanBtn.style.display = hasHuman ? 'none' : 'flex';
+            if (aiBtn) aiBtn.style.display = hasAI ? 'none' : 'flex';
+            if (anyBtn) anyBtn.style.display = (hasHuman && hasAI) ? 'flex' : 'none';
+            if (continueBtn) continueBtn.style.display = (hasHuman && hasAI) ? 'block' : 'none';
+        }
+
+        window.editNode = function(scenarioName, nodeId) {
+            appState.activeScenario = scenarioName;
+            const node = appState.scenarios[scenarioName].nodes.find(n => n.id === nodeId);
+            if (node) openNodeModal(node);
+        };
+
+        window.deleteNode = function(scenarioName, nodeId) {
+            if (confirm('Remove this pattern?')) {
+                appState.scenarios[scenarioName].nodes = appState.scenarios[scenarioName].nodes.filter(n => n.id !== nodeId);
+                appState.scenarios[scenarioName].connections = appState.scenarios[scenarioName].connections.filter(c => 
+                    c.fromId !== nodeId && c.toId !== nodeId
+                );
+                logEdit('delete_node', { nodeId: nodeId });
+                renderNodesGallery(scenarioName);
+            }
+        };
+
+        // ===============================================
+        // NODE MODAL
+        // ===============================================
+        
+        let selectedType = null;
+        let selectedSentiment = null;
+
+        function openNodeModal(nodeToEdit = null, preselectedType = null) {
+            selectedType = null;
+            selectedSentiment = null;
+            
+            if (nodeToEdit) {
+                getCurrentScenario().editingNode = nodeToEdit;
+                document.getElementById('modalTitle').textContent = 'Edit Pattern';
+                document.getElementById('nodeName').value = nodeToEdit.name;
+                document.getElementById('nodeDescription').value = nodeToEdit.description;
+                selectedType = nodeToEdit.type;
+                selectedSentiment = nodeToEdit.sentiment;
+                
+                document.querySelectorAll('.type-card').forEach(card => {
+                    card.classList.toggle('selected', card.dataset.type === nodeToEdit.type);
+                });
+                document.querySelectorAll('#nodeModal .sentiment-card').forEach(card => {
+                    card.classList.toggle('selected', card.dataset.sentiment === nodeToEdit.sentiment);
+                });
+            } else {
+                getCurrentScenario().editingNode = null;
+                document.getElementById('modalTitle').textContent = 'Create a Pattern';
+                document.getElementById('nodeName').value = '';
+                document.getElementById('nodeDescription').value = '';
+                document.querySelectorAll('.type-card, #nodeModal .sentiment-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                if (preselectedType) {
+                    selectedType = preselectedType;
+                    document.querySelectorAll('.type-card').forEach(card => {
+                        if (card.dataset.type === preselectedType) {
+                            card.classList.add('selected');
+                        }
+                    });
+                }
+            }
+            
+            document.getElementById('nodeModal').classList.add('active');
+        }
+
+        // ===============================================
+        // PATTERN WEB VISUALIZATION
+        // ===============================================
+        
+        function renderPatternWeb(scenarioName) {
+            const scenario = appState.scenarios[scenarioName];
+            const web = document.getElementById(scenarioName + 'PatternWeb');
+            const svg = document.getElementById(scenarioName + 'Svg');
+            
+            web.querySelectorAll('.web-node').forEach(el => el.remove());
+            svg.innerHTML = '';
+            
+            const centerX = web.offsetWidth / 2;
+            const centerY = web.offsetHeight / 2;
+            const radius = Math.min(centerX, centerY) - 60;
+            
+            const humanNodes = scenario.nodes.filter(n => n.type === 'human');
+            const aiNodes = scenario.nodes.filter(n => n.type === 'ai');
+            
+            humanNodes.forEach((node, index) => {
+                const startAngle = Math.PI * 0.7;
+                const endAngle = Math.PI * 1.3;
+                const angle = humanNodes.length === 1 ? Math.PI : startAngle + (index / (humanNodes.length - 1 || 1)) * (endAngle - startAngle);
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                createWebNode(web, scenarioName, node, x, y);
+            });
+            
+            aiNodes.forEach((node, index) => {
+                const startAngle = -Math.PI * 0.3;
+                const endAngle = Math.PI * 0.3;
+                const angle = aiNodes.length === 1 ? 0 : startAngle + (index / (aiNodes.length - 1 || 1)) * (endAngle - startAngle);
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                createWebNode(web, scenarioName, node, x, y);
+            });
+            
+            updateWebLines(scenarioName);
+            renderConnectionsPanel(scenarioName);
+        }
+        
+        function createWebNode(web, scenarioName, node, x, y) {
+            const nodeEl = document.createElement('div');
+            nodeEl.className = `web-node ${node.type}`;
+            nodeEl.id = scenarioName + '-web-node-' + node.id;
+            nodeEl.style.left = (x - 45) + 'px';
+            nodeEl.style.top = (y - 45) + 'px';
+            nodeEl.textContent = node.name;
+            nodeEl.onclick = () => handleNodeClick(scenarioName, node.id);
+            web.appendChild(nodeEl);
+        }
+
+        function handleNodeClick(scenarioName, nodeId) {
+            appState.activeScenario = scenarioName;
+            const scenario = appState.scenarios[scenarioName];
+            
+            if (scenario.selectedNode === null) {
+                scenario.selectedNode = nodeId;
+                const node = scenario.nodes.find(n => n.id === nodeId);
+                document.getElementById('selectedNodeName').textContent = node.name;
+                document.getElementById('selectionNotice').classList.add('active');
+                document.getElementById(scenarioName + '-web-node-' + nodeId).classList.add('selected');
+            } else if (scenario.selectedNode === nodeId) {
+                cancelSelection();
+            } else {
+                const existingConnection = scenario.connections.find(c =>
+                    (c.fromId === scenario.selectedNode && c.toId === nodeId) ||
+                    (c.fromId === nodeId && c.toId === scenario.selectedNode)
+                );
+                
+                if (existingConnection) {
+                    openConnectionModal(existingConnection);
+                } else {
+                    const connection = {
+                        id: Date.now(),
+                        fromId: scenario.selectedNode,
+                        toId: nodeId,
+                        strength: 'medium',
+                        description: '',
+                        createdAt: Date.now()
+                    };
+                    scenario.connections.push(connection);
+                    logEdit('create_connection', connection);
+                    openConnectionModal(connection);
+                }
+                cancelSelection();
+            }
+        }
+
+        function cancelSelection() {
+            const scenario = getCurrentScenario();
+            scenario.selectedNode = null;
+            document.getElementById('selectionNotice').classList.remove('active');
+            document.querySelectorAll('.web-node').forEach(n => n.classList.remove('selected'));
+        }
+
+        function updateWebLines(scenarioName) {
+            const scenario = appState.scenarios[scenarioName];
+            const svg = document.getElementById(scenarioName + 'Svg');
+            const web = document.getElementById(scenarioName + 'PatternWeb');
+            svg.innerHTML = '';
+            
+            const centerX = web.offsetWidth / 2;
+            const centerY = web.offsetHeight / 2;
+            
+            scenario.nodes.forEach(node => {
+                const nodeEl = document.getElementById(scenarioName + '-web-node-' + node.id);
+                if (!nodeEl) return;
+                
+                const nodeRect = nodeEl.getBoundingClientRect();
+                const webRect = web.getBoundingClientRect();
+                
+                const x = nodeRect.left + nodeRect.width/2 - webRect.left;
+                const y = nodeRect.top + nodeRect.height/2 - webRect.top;
+                
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', centerX);
+                line.setAttribute('y1', centerY);
+                line.setAttribute('x2', x);
+                line.setAttribute('y2', y);
+                line.setAttribute('stroke', node.type === 'human' ? 'rgba(217, 119, 6, 0.25)' : 'rgba(106, 171, 181, 0.25)');
+                line.setAttribute('stroke-width', '1.5');
+                line.setAttribute('stroke-dasharray', '4, 6');
+                svg.appendChild(line);
+            });
+            
+            scenario.connections.forEach(conn => {
+                const fromEl = document.getElementById(scenarioName + '-web-node-' + conn.fromId);
+                const toEl = document.getElementById(scenarioName + '-web-node-' + conn.toId);
+                if (!fromEl || !toEl) return;
+                
+                const fromRect = fromEl.getBoundingClientRect();
+                const toRect = toEl.getBoundingClientRect();
+                const webRect = web.getBoundingClientRect();
+                
+                const x1 = fromRect.left + fromRect.width/2 - webRect.left;
+                const y1 = fromRect.top + fromRect.height/2 - webRect.top;
+                const x2 = toRect.left + toRect.width/2 - webRect.left;
+                const y2 = toRect.top + toRect.height/2 - webRect.top;
+                
+                const midX = (x1 + x2) / 2;
+                const midY = (y1 + y2) / 2;
+                const dx = midX - centerX;
+                const dy = midY - centerY;
+                const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+                const ctrlX = midX - (dx / dist) * dist * 0.15;
+                const ctrlY = midY - (dy / dist) * dist * 0.15;
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', `M ${x1} ${y1} Q ${ctrlX} ${ctrlY} ${x2} ${y2}`);
+                path.setAttribute('fill', 'none');
+                path.setAttribute('stroke', '#6aabb5');
+                path.setAttribute('stroke-width', conn.strength === 'weak' ? '2' : conn.strength === 'medium' ? '3' : '4');
+                if (conn.strength === 'weak') path.setAttribute('stroke-dasharray', '6, 6');
+                svg.appendChild(path);
+                
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', midX);
+                circle.setAttribute('cy', midY);
+                circle.setAttribute('r', conn.description ? 8 : 6);
+                circle.setAttribute('fill', conn.description ? '#6aabb5' : '#a8d4d8');
+                circle.setAttribute('stroke', 'white');
+                circle.setAttribute('stroke-width', '2');
+                circle.style.cursor = 'pointer';
+                circle.style.pointerEvents = 'auto';
+                circle.onclick = (e) => {
+                    e.stopPropagation();
+                    appState.activeScenario = scenarioName;
+                    openConnectionModal(conn);
+                };
+                svg.appendChild(circle);
+            });
+        }
+
+        function renderConnectionsPanel(scenarioName) {
+            const scenario = appState.scenarios[scenarioName];
+            const panel = document.getElementById(scenarioName + 'ConnectionsPanel');
+            
+            if (!scenario.connections || scenario.connections.length === 0) {
+                panel.innerHTML = '<p style="text-align: center; color: var(--color-text-secondary); padding: 1rem; font-size: 0.9rem;">No connections yet. Click on patterns to connect them.</p>';
+                return;
+            }
+            
+            panel.innerHTML = scenario.connections.map(conn => {
+                const fromNode = scenario.nodes.find(n => n.id === conn.fromId);
+                const toNode = scenario.nodes.find(n => n.id === conn.toId);
+                return `
+                    <div class="connection-panel" data-connection-id="${conn.id}">
+                        <div class="connection-header">
+                            <div class="connection-path">${fromNode.name} ↔ ${toNode.name}</div>
+                            <span class="strength-badge">${conn.strength}</span>
+                        </div>
+                        ${conn.description ? `<p style="color: var(--color-text-secondary); font-size: 0.85rem; font-style: italic;">"${conn.description}"</p>` : '<p style="color: var(--color-text-secondary); font-size: 0.85rem;">Click to describe...</p>'}
+                    </div>
+                `;
+            }).join('');
+            
+            panel.querySelectorAll('.connection-panel').forEach(panelEl => {
+                panelEl.addEventListener('click', function() {
+                    appState.activeScenario = scenarioName;
+                    const connId = parseInt(this.dataset.connectionId);
+                    const conn = scenario.connections.find(c => c.id === connId);
+                    if (conn) openConnectionModal(conn);
+                });
+            });
+        }
+
+        // ===============================================
+        // CONNECTION MODAL
+        // ===============================================
+        
+        let currentConnectionStrength = 'medium';
+
+        function openConnectionModal(connection) {
+            const scenario = getCurrentScenario();
+            scenario.editingConnection = connection;
+            
+            const fromNode = scenario.nodes.find(n => n.id === connection.fromId);
+            const toNode = scenario.nodes.find(n => n.id === connection.toId);
+            
+            document.getElementById('connectionFrom').textContent = fromNode.name;
+            document.getElementById('connectionTo').textContent = toNode.name;
+            document.getElementById('connectionDescription').value = connection.description || '';
+            
+            currentConnectionStrength = connection.strength;
+            document.querySelectorAll('.strength-card').forEach(card => {
+                card.classList.toggle('selected', card.dataset.strength === connection.strength);
+            });
+            
+            document.getElementById('connectionModal').classList.add('active');
+        }
+
+        // ===============================================
+        // INITIALIZATION
+        // ===============================================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            trackTime(1);
+            
+            // Chapter 1 - Consent
+            document.getElementById('consentCheck').addEventListener('change', function() {
+                document.getElementById('startBtn').disabled = !this.checked;
+            });
+
+            document.getElementById('startBtn').addEventListener('click', function() {
+                if (!document.getElementById('consentCheck').checked) return;
+                switchChapter(2);
+            });
+
+            // Chapter 2 - Background
+            document.getElementById('beforeMentalModel').addEventListener('change', function() {
+                document.getElementById('beforeOtherGroup').style.display = this.value === 'other' ? 'block' : 'none';
+            });
+
+            document.getElementById('afterMentalModel').addEventListener('change', function() {
+                document.getElementById('afterOtherGroup').style.display = this.value === 'other' ? 'block' : 'none';
+            });
+
+            document.getElementById('continueToCurrentBtn').addEventListener('click', function() {
+                const university = document.getElementById('university').value;
+                const field = document.getElementById('field').value;
+                const year = document.getElementById('year').value;
+                const beforeMentalModel = document.getElementById('beforeMentalModel').value;
+                const aiToolsUsed = document.getElementById('aiToolsUsed').value;
+                const aiExperience = document.getElementById('aiExperience').value;
+                
+                if (!university || !field || !year || !beforeMentalModel || !aiToolsUsed || !aiExperience) {
+                    alert('Please complete all fields.');
+                    return;
+                }
+                
+                appState.demographics = { university, field, year };
+                appState.beforePerspectives = {
+                    mentalModel: beforeMentalModel,
+                    mentalModelOther: document.getElementById('beforeMentalModelOther').value,
+                    aiToolsUsed: aiToolsUsed,
+                    aiExperience: aiExperience
+                };
+                
+                logEdit('complete_background', { demographics: appState.demographics, before: appState.beforePerspectives });
+                switchChapter(3);
+            });
+
+            // Chapter 3 - Current Scenario Node Buttons
+            document.getElementById('currentAddHumanBtn').addEventListener('click', function() {
+                appState.activeScenario = 'current';
+                openNodeModal(null, 'human');
+            });
+
+            document.getElementById('currentAddAIBtn').addEventListener('click', function() {
+                appState.activeScenario = 'current';
+                openNodeModal(null, 'ai');
+            });
+
+            document.getElementById('currentAddAnyBtn').addEventListener('click', function() {
+                appState.activeScenario = 'current';
+                openNodeModal();
+            });
+
+            document.getElementById('currentContinueToMappingBtn').addEventListener('click', function() {
+                const context = document.getElementById('currentContext').value;
+                const tool = document.getElementById('currentTool').value;
+                
+                if (!context || !tool) {
+                    alert('Please describe your AI use context.');
+                    return;
+                }
+                
+                appState.scenarios.current.context = { description: context, tool: tool };
+                document.getElementById('currentMappingSection').style.display = 'block';
+                renderPatternWeb('current');
+                window.scrollTo({ top: document.getElementById('currentMappingSection').offsetTop - 100, behavior: 'smooth' });
+            });
+
+            document.getElementById('continueToFutureBtn').addEventListener('click', function() {
+                switchChapter(4);
+            });
+
+            // Chapter 4 - Future Scenario Node Buttons
+            document.getElementById('futureAddHumanBtn').addEventListener('click', function() {
+                appState.activeScenario = 'future';
+                openNodeModal(null, 'human');
+            });
+
+            document.getElementById('futureAddAIBtn').addEventListener('click', function() {
+                appState.activeScenario = 'future';
+                openNodeModal(null, 'ai');
+            });
+
+            document.getElementById('futureAddAnyBtn').addEventListener('click', function() {
+                appState.activeScenario = 'future';
+                openNodeModal();
+            });
+
+            document.getElementById('futureContinueToMappingBtn').addEventListener('click', function() {
+                const context = document.getElementById('futureContext').value;
+                const tool = document.getElementById('futureTool').value;
+                
+                if (!context || !tool) {
+                    alert('Please describe your envisioned scenario.');
+                    return;
+                }
+                
+                appState.scenarios.future.context = { description: context, tool: tool };
+                document.getElementById('futureMappingSection').style.display = 'block';
+                renderPatternWeb('future');
+                window.scrollTo({ top: document.getElementById('futureMappingSection').offsetTop - 100, behavior: 'smooth' });
+            });
+
+            document.getElementById('continueToReflectionBtn').addEventListener('click', function() {
+                switchChapter(5);
+            });
+
+            // Node Modal
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedType = this.dataset.type;
+                });
+            });
+
+            document.querySelectorAll('#nodeModal .sentiment-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('#nodeModal .sentiment-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedSentiment = this.dataset.sentiment;
+                });
+            });
+
+            document.getElementById('saveNodeBtn').addEventListener('click', function() {
+                const name = document.getElementById('nodeName').value.trim();
+                const description = document.getElementById('nodeDescription').value.trim();
+                
+                if (!selectedType || !selectedSentiment || !name || !description) {
+                    alert('Please complete all fields.');
+                    return;
+                }
+                
+                const scenario = getCurrentScenario();
+                const node = {
+                    id: scenario.editingNode ? scenario.editingNode.id : Date.now(),
+                    type: selectedType,
+                    sentiment: selectedSentiment,
+                    name: name,
+                    description: description,
+                    createdAt: scenario.editingNode ? scenario.editingNode.createdAt : Date.now()
+                };
+                
+                if (scenario.editingNode) {
+                    const index = scenario.nodes.findIndex(n => n.id === scenario.editingNode.id);
+                    scenario.nodes[index] = node;
+                    logEdit('edit_node', node);
+                } else {
+                    scenario.nodes.push(node);
+                    logEdit('create_node', node);
+                }
+                
+                document.getElementById('nodeModal').classList.remove('active');
+                renderNodesGallery(appState.activeScenario);
+            });
+
+            document.getElementById('cancelNodeBtn').addEventListener('click', function() {
+                document.getElementById('nodeModal').classList.remove('active');
+            });
+
+            // Connection Modal
+            document.querySelectorAll('.strength-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.strength-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    currentConnectionStrength = this.dataset.strength;
+                });
+            });
+
+            document.getElementById('saveConnectionBtn').addEventListener('click', function() {
+                const scenario = getCurrentScenario();
+                if (!scenario.editingConnection) return;
+                
+                const description = document.getElementById('connectionDescription').value.trim();
+                if (!description) {
+                    alert('Please describe the connection.');
+                    return;
+                }
+                
+                scenario.editingConnection.description = description;
+                scenario.editingConnection.strength = currentConnectionStrength;
+                logEdit('update_connection', scenario.editingConnection);
+                
+                document.getElementById('connectionModal').classList.remove('active');
+                updateWebLines(appState.activeScenario);
+                renderConnectionsPanel(appState.activeScenario);
+            });
+
+            document.getElementById('deleteConnectionBtn').addEventListener('click', function() {
+                const scenario = getCurrentScenario();
+                if (!scenario.editingConnection) return;
+                
+                if (confirm('Remove this connection?')) {
+                    scenario.connections = scenario.connections.filter(c => c.id !== scenario.editingConnection.id);
+                    logEdit('delete_connection', { connectionId: scenario.editingConnection.id });
+                    document.getElementById('connectionModal').classList.remove('active');
+                    updateWebLines(appState.activeScenario);
+                    renderConnectionsPanel(appState.activeScenario);
+                }
+            });
+
+            document.getElementById('cancelConnectionBtn').addEventListener('click', function() {
+                document.getElementById('connectionModal').classList.remove('active');
+            });
+
+            document.getElementById('cancelSelectionBtn').addEventListener('click', cancelSelection);
+
+            // Chapter 5 - Reflection & Submit
+            document.getElementById('wantContact').addEventListener('change', function() {
+                document.getElementById('contactFields').style.display = this.checked ? 'block' : 'none';
+            });
+
+            document.getElementById('submitBtn').addEventListener('click', function() {
+                appState.reflections = {
+                    afterMentalModel: document.getElementById('afterMentalModel').value,
+                    afterMentalModelOther: document.getElementById('afterMentalModelOther').value,
+                    valuable: document.getElementById('reflectionValuable').value,
+                    feedback: {
+                        helpedNotice: document.getElementById('feedbackClear').checked,
+                        unclearPattern: document.getElementById('feedbackPrompts').checked,
+                        moreReflection: document.getElementById('feedbackReflection').checked,
+                        futureHard: document.getElementById('feedbackFuture').checked,
+                        unclearValue: document.getElementById('feedbackValue').checked
+                    },
+                    stats: {
+                        currentNodes: appState.scenarios.current.nodes.length,
+                        currentConnections: appState.scenarios.current.connections.length,
+                        futureNodes: appState.scenarios.future.nodes.length,
+                        futureConnections: appState.scenarios.future.connections.length
+                    },
+                    openFeedback: document.getElementById('reflectionFeedback').value
+                };
+                
+                const wantContact = document.getElementById('wantContact').checked;
+                if (wantContact) {
+                    const email = document.getElementById('contactEmail').value;
+                    if (!email) {
+                        alert('Please provide your email address.');
+                        return;
+                    }
+                    appState.contact = {
+                        email: email,
+                        name: document.getElementById('contactName').value
+                    };
+                }
+                
+                if (!appState.reflections.afterMentalModel || !appState.reflections.valuable) {
+                    alert('Please complete the required questions.');
+                    return;
+                }
+                
+                trackTime(5);
+                
+                const formData = new FormData();
+                formData.append('form-name', 'ai-experience-mapping');
+                formData.append('timestamp', new Date().toISOString());
+                formData.append('sessionId', appState.sessionId);
+                formData.append('demographics', JSON.stringify(appState.demographics));
+                formData.append('beforePerspectives', JSON.stringify(appState.beforePerspectives));
+                formData.append('currentScenario', JSON.stringify(appState.scenarios.current));
+                formData.append('futureScenario', JSON.stringify(appState.scenarios.future));
+                formData.append('reflections', JSON.stringify(appState.reflections));
+                if (wantContact) {
+                    formData.append('contact', JSON.stringify(appState.contact));
+                }
+                formData.append('processData', JSON.stringify(appState.processData));
+                
+                fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData).toString()
+                })
+                .then(() => {
+                    alert('Thank you! Your response has been submitted.');
+                    window.location.reload();
+                })
+                .catch((error) => {
+                    console.error('Submission error:', error);
+                    alert('There was an error. Please try again.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
