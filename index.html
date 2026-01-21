@@ -875,7 +875,7 @@
                     <p style="margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem;">
                         <strong>How we will use your data:</strong> We are building a community and resources for 
                         learners and students. Your responses will help us design better tools and may be shared 
-                        in academic publications (always anonymously).
+                        in academic publications.
                     </p>
                     <p style="margin-bottom: 0.75rem; line-height: 1.6; font-size: 0.9rem;">
                         <strong>Questions?</strong> Contact us at <a href="mailto:info@debiasme.com" style="color: var(--color-primary);">info@debiasme.com</a>
@@ -938,10 +938,7 @@
                         <option value="">Select what feels closest to your current thinking</option>
                         <option value="inherent">They are built into the AI system</option>
                         <option value="user-driven">They come from how I phrase my questions</option>
-                        <option value="independent">AI has its tendencies, I have mine, they are separate</option>
-                        <option value="one-way">AI shapes my thinking, but I do not shape its outputs</option>
-                        <option value="interactive">My approach and AI responses influence each other</option>
-                        <option value="co-constructed">We create outputs together through back and forth</option>
+                        <option value="interactive">My approach and AI responses influence each other to create outputs together</option>
                         <option value="systemic">They come from larger systems (training data, society, etc.)</option>
                         <option value="other">Something else</option>
                     </select>
@@ -953,19 +950,14 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Which AI tools do you use?</label>
-                    <textarea class="form-textarea" id="aiToolsUsed" 
-                              placeholder="For example: ChatGPT for writing, GitHub Copilot for coding, Gemini for research..."></textarea>
-                </div>
-
-                <div class="form-group">
                     <label class="form-label">How would you describe your experience with AI?</label>
                     <select class="form-select" id="aiExperience">
                         <option value="">Select</option>
-                        <option value="beginner">Just getting started</option>
-                        <option value="intermediate">Regular user for specific tasks</option>
-                        <option value="advanced">Frequent user across many contexts</option>
-                        <option value="expert">Deep experience with critical approach</option>
+                        <option value="noai">Never used AI tools</option>
+                        <option value="beginner">USed a few times</option>
+                        <option value="intermediate">Regular use for specific tasks</option>
+                        <option value="advanced">Frequent use across many contexts</option>
+                        <option value="expert">Deep understanding with critical approach</option>
                     </select>
                 </div>
             </div>
@@ -998,23 +990,23 @@
             </div>
 
             <div class="panel">
-                <h2 class="panel-title">Map the Patterns</h2>
+                <h2 class="panel-title">Reflect on your experience</h2>
                 <p class="panel-intro">
-                    Identify patterns that shaped this experience. Click on a circle to add a pattern.
+                   What did you notice? For example, did you feel rushed? Did the AI miss your point, or give you a great answer like an expert?<br>Click a circle to add an observation.
                 </p>
 
                 <!-- Circular Guided Steps -->
                 <div class="guided-steps-container" id="currentGuidedSteps">
                     <div class="guided-step-circle human" id="currentAddHumanBtn">
                         <span class="step-icon">🧠</span>
-                        <span class="step-label">Your Pattern</span>
-                        <span class="step-hint">Click to add</span>
+                        <span class="step-label">About Me</span>
+                        <span class="step-hint">My thoughts, intentions, habits, or choices (E.g., I asked good follow-ups, I trusted it without checking)</span>
                     </div>
                     
                     <div class="guided-step-circle ai" id="currentAddAIBtn">
                         <span class="step-icon">🤖</span>
-                        <span class="step-label">AI Pattern</span>
-                        <span class="step-hint">Click to add</span>
+                        <span class="step-label">About the AI</span>
+                        <span class="step-hint">What the AI did or said (E.g., It explained clearly, It sounded confident but was wrong)</span>
                     </div>
 
                     <div class="guided-step-circle any" id="currentAddAnyBtn" style="display: none;">
@@ -1029,16 +1021,16 @@
 
             <div class="text-center">
                 <button class="btn-primary" id="currentContinueToMappingBtn" style="display: none;">
-                    Map Connections →
+                    See How They Connect →
                 </button>
             </div>
 
             <!-- Connection Mapping -->
             <div id="currentMappingSection" style="display: none;">
                 <div class="panel">
-                    <h2 class="panel-title">Connect the Patterns</h2>
+                    <h2 class="panel-title">How are they related?</h2>
                     <p class="panel-intro">
-                        Click on one pattern, then another to draw a connection.
+                        Did one thing lead to another? For example, "I gave clear instructions" → "The AI gave a useful answer" or "It sounded confident" → "So I didn't double-check."<br>Click one observation, then another to connect them.
                     </p>
                 </div>
 
@@ -1048,7 +1040,7 @@
                         <div class="connection-helper-steps">
                             <div class="connection-helper-step">
                                 <span class="connection-helper-number">1</span>
-                                <span>Click any pattern</span>
+                                <span>Click any observation</span>
                             </div>
                             <div class="connection-helper-step">
                                 <span class="connection-helper-number">2</span>
@@ -1056,7 +1048,7 @@
                             </div>
                             <div class="connection-helper-step">
                                 <span class="connection-helper-number">3</span>
-                                <span>Describe the relationship</span>
+                                <span>Describe how they're related</span>
                             </div>
                         </div>
                         <button class="connection-helper-dismiss" onclick="dismissHelper('current')">Got it</button>
@@ -1080,40 +1072,40 @@
             <div class="panel">
                 <h2 class="panel-title">Imagine the Distant Future</h2>
                 <p class="panel-intro">
-                    Imagine 5 to 10 years from now, when AI has evolved significantly. 
+                    Imagine 50 to 100 years from now, when AI has evolved significantly. 
                     What would your ideal AI experience look like?
                 </p>
 
                 <div class="form-group">
-                    <label class="form-label">Describe your imagined future scenario</label>
+                    <label class="form-label">In this future, what would a "good" AI use look like?</label>
                     <textarea class="form-textarea" id="futureContext" 
-                              placeholder="What challenge or task? How would AI support your thinking in ways that are not possible today?"></textarea>
+                              placeholder=Share freely: How would you feel? What would AI help you do or become? What would make it trustworthy?"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">What AI capabilities would you want to exist?</label>
-                    <input type="text" class="form-input" id="futureTool">
+                    <label class="form-label">What would you want to avoid, even with advanced AI?</label>
+                    <input type="text" class="form-input" id="futureTool" placeholder="E.g., losing my own view, feeling dependent, being manipulated...">
                 </div>
             </div>
 
             <div class="panel">
-                <h2 class="panel-title">Map the Envisioned Patterns</h2>
+                <h2 class="panel-title">What would make this future possible?</h2>
                 <p class="panel-intro">
-                    What patterns would you want to see (or avoid) in this future scenario?
+                    What would you and the AI each need to do to create your ideal experience?
                 </p>
 
                 <!-- Circular Guided Steps -->
                 <div class="guided-steps-container" id="futureGuidedSteps">
                     <div class="guided-step-circle human" id="futureAddHumanBtn">
                         <span class="step-icon">🧠</span>
-                        <span class="step-label">Your Pattern</span>
-                        <span class="step-hint">Click to add</span>
+                        <span class="step-label">My Role</span>
+                        <span class="step-hint">E.g., Keep thinking for myself, Set boundaries</span>
                     </div>
                     
                     <div class="guided-step-circle ai" id="futureAddAIBtn">
                         <span class="step-icon">🤖</span>
-                        <span class="step-label">AI Pattern</span>
-                        <span class="step-hint">Click to add</span>
+                        <span class="step-label">AI's Role</span>
+                        <span class="step-hint">E.g., Be honest about limits, Support my growth</span>
                     </div>
 
                     <div class="guided-step-circle any" id="futureAddAnyBtn" style="display: none;">
@@ -1128,16 +1120,16 @@
 
             <div class="text-center">
                 <button class="btn-primary" id="futureContinueToMappingBtn" style="display: none;">
-                    Map Connections →
+                    See How They Connect →
                 </button>
             </div>
 
             <!-- Connection Mapping -->
             <div id="futureMappingSection" style="display: none;">
                 <div class="panel">
-                    <h2 class="panel-title">Connect the Patterns</h2>
+                    <h2 class="panel-title">How would these work together?</h2>
                     <p class="panel-intro">
-                        In your envisioned future, how would these patterns relate to each other?
+                        In your ideal future, how would your role and the AI's role support each other?<br>Click one, then another to draw a connection.
                     </p>
                 </div>
 
@@ -1147,7 +1139,7 @@
                         <div class="connection-helper-steps">
                             <div class="connection-helper-step">
                                 <span class="connection-helper-number">1</span>
-                                <span>Click any pattern</span>
+                                <span>Click any thought</span>
                             </div>
                             <div class="connection-helper-step">
                                 <span class="connection-helper-number">2</span>
@@ -1155,7 +1147,7 @@
                             </div>
                             <div class="connection-helper-step">
                                 <span class="connection-helper-number">3</span>
-                                <span>Describe the relationship</span>
+                                <span>Describe how they'd support each other</span>
                             </div>
                         </div>
                         <button class="connection-helper-dismiss" onclick="dismissHelper('future')">Got it</button>
@@ -1182,13 +1174,10 @@
                 <div class="form-group">
                     <label class="form-label">After this exercise: Where do you now think patterns in AI outputs come from?</label>
                     <select class="form-select" id="afterMentalModel">
-                        <option value="">Select what feels closest to your thinking now</option>
+                        <option value="">Select what feels closest to your current thinking</option>
                         <option value="inherent">They are built into the AI system</option>
                         <option value="user-driven">They come from how I phrase my questions</option>
-                        <option value="independent">AI has its tendencies, I have mine, they are separate</option>
-                        <option value="one-way">AI shapes my thinking, but I do not shape its outputs</option>
-                        <option value="interactive">My approach and AI responses influence each other</option>
-                        <option value="co-constructed">We create outputs together through back and forth</option>
+                        <option value="interactive">My approach and AI responses influence each other to create outputs together</option>
                         <option value="systemic">They come from larger systems (training data, society, etc.)</option>
                         <option value="other">Something else</option>
                     </select>
@@ -1203,26 +1192,34 @@
                     <label class="form-label">What was most helpful about this exercise?</label>
                     <select class="form-select" id="reflectionValuable">
                         <option value="">Select what resonated most</option>
-                        <option value="awareness">Becoming aware of patterns I had not noticed</option>
+                        <option value="awareness">Becoming aware of AI patterns I had not noticed</option>
                         <option value="naming">Putting words to vague feelings</option>
-                        <option value="connections">Seeing how patterns relate to each other</option>
-                        <option value="comparison">Comparing present and future</option>
-                        <option value="visualization">Having a visual map</option>
-                        <option value="reflection">Taking time to reflect deliberately</option>
+                        <option value="connections">Seeing how AI and I relate to each other</option>
+                        <option value="reflection">Taking time to reflect on AI use</option>
                         <option value="agency">Realizing I have more influence than I thought</option>
+                       <option value="other">Something else</option>
                     </select>
                 </div>
 
+                <div class="form-group" id="afterOtherGroup" style="display: none;">
+                    <label class="form-label">Please describe</label>
+                    <input type="text" class="form-input" id="afterMentalModelOther">
+                </div>
+
                 <div class="form-group">
-                    <label class="form-label">How could this exercise be improved? (Select any that apply)</label>
+                    <label class="form-label">Was there any part of this activity that felt confusing or unclear? (Select any that apply)</label>
                     <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-top: 0.75rem;">
                         <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
                             <input type="checkbox" id="feedbackClear" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
-                            <span>It helped me notice things I had not thought about before</span>
+                            <span>It was hard to follow the instructions</span>
+                        </label>
+                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox" id="feedbackClear" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>During the connecting exercise, it felt difficult to create individual notes </span>
                         </label>
                         <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
                             <input type="checkbox" id="feedbackPrompts" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
-                            <span>I was not sure what counted as a "pattern"</span>
+                            <span>During the connecting exercise, I was not sure how to connect individual notes</span>
                         </label>
                         <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
                             <input type="checkbox" id="feedbackReflection" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
@@ -1231,10 +1228,6 @@
                         <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
                             <input type="checkbox" id="feedbackFuture" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
                             <span>The future scenario was hard to imagine</span>
-                        </label>
-                        <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
-                            <input type="checkbox" id="feedbackValue" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
-                            <span>I am not sure how this will help me use AI better</span>
                         </label>
                     </div>
                 </div>
@@ -1272,7 +1265,7 @@
 
             <div class="panel" style="background: var(--color-primary); color: white;">
                 <p style="text-align: center; font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem;">
-                    Thank you for sharing your experience! Your insights will help us design better tools for learners and students.
+                    Thank you for sharing your experience! Your insights will help us design better tools for learners.
                 </p>
                 
                 <div class="text-center">
@@ -1294,27 +1287,27 @@
     <div id="nodeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Create a Pattern</h3>
+                <h3 class="modal-title" id="modalTitle">Add a thought</h3>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Is this about your thinking or the AI?</label>
+                <label class="form-label">This note is about:</label>
                 <div class="type-selector">
                     <div class="type-card human" data-type="human">
                         <div class="type-emoji">🧠</div>
-                        <div class="type-label">Your Pattern</div>
-                        <p class="type-description">Your thinking, approach, assumptions</p>
+                        <div class="type-label">You</div>
+                        <p class="type-description">What I do, think, or feel</p>
                     </div>
                     <div class="type-card ai" data-type="ai">
                         <div class="type-emoji">🤖</div>
-                        <div class="type-label">AI Pattern</div>
-                        <p class="type-description">AI behavior, responses, characteristics</p>
+                        <div class="type-label">AI</div>
+                        <p class="type-description">What the AI do or how it would behave</p>
                     </div>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">How would you characterize this pattern?</label>
+                <label class="form-label">Was this helpful or problematic?</label>
                 <div class="sentiment-selector">
                     <div class="sentiment-card" data-sentiment="helpful">
                         <div class="sentiment-emoji">✨</div>
@@ -1332,12 +1325,12 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Name this pattern</label>
+                <label class="form-label">Give it a short name</label>
                 <input type="text" class="form-input" id="nodeName">
             </div>
 
             <div class="form-group">
-                <label class="form-label">Describe what you noticed</label>
+                <label class="form-label">Describe your thought</label>
                 <textarea class="form-textarea" id="nodeDescription" 
                           placeholder="What happened? Why does it matter?"></textarea>
             </div>
