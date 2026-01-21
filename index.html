@@ -43,7 +43,6 @@
             line-height: 1.6;
         }
 
-        /* Add slight overlay to ensure text readability */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -52,7 +51,6 @@
             min-height: 100vh;
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 2rem;
@@ -74,7 +72,6 @@
             opacity: 0.95;
         }
 
-        /* Simple Progress Bar */
         .progress-simple {
             display: flex;
             justify-content: center;
@@ -111,7 +108,6 @@
             background: var(--color-primary);
         }
 
-        /* View Sections */
         .view-section {
             display: none;
             animation: fadeIn 0.4s ease-out;
@@ -126,7 +122,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Panels */
         .panel {
             background: var(--color-surface);
             border-radius: 0.75rem;
@@ -173,7 +168,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* Form Elements */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -214,7 +208,6 @@
             line-height: 1.6;
         }
 
-        /* Node Gallery - Rectangular Cards */
         .nodes-gallery {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -311,7 +304,6 @@
             color: var(--color-primary);
         }
 
-        /* Circular Guided Steps */
         .guided-steps-container {
             display: flex;
             flex-wrap: wrap;
@@ -384,7 +376,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Pattern Web Visualization */
         .pattern-web {
             background: linear-gradient(135deg, #f8fbfb 0%, #f0f7f7 100%);
             border-radius: 0.75rem;
@@ -469,7 +460,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        /* Connection Helper Popup */
         .connection-helper {
             position: absolute;
             top: 1rem;
@@ -570,7 +560,6 @@
             color: var(--color-text-secondary);
         }
 
-        /* Buttons */
         .btn-primary {
             background: var(--color-primary);
             color: white;
@@ -625,7 +614,6 @@
             margin-top: 1.5rem;
         }
 
-        /* Modal */
         .modal {
             position: fixed;
             top: 0;
@@ -665,11 +653,39 @@
             margin-bottom: 0.25rem;
         }
 
+        .modal-subtitle {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+        }
+
+        .modal-type-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-type-indicator.human {
+            background: #fffbeb;
+            color: var(--color-human);
+            border: 2px solid var(--color-human);
+        }
+
+        .modal-type-indicator.ai {
+            background: #f0f7f7;
+            color: var(--color-primary-dark);
+            border: 2px solid var(--color-ai);
+        }
+
         .type-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.5rem;
         }
 
         .type-card {
@@ -680,6 +696,10 @@
             text-align: center;
             transition: all 0.2s;
             background: var(--color-surface);
+        }
+
+        .type-card:hover {
+            border-color: var(--color-primary);
         }
 
         .type-card.selected.human {
@@ -700,7 +720,6 @@
         .type-label {
             font-weight: 600;
             font-size: 0.9rem;
-            margin-bottom: 0.25rem;
         }
 
         .type-description {
@@ -821,13 +840,11 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <h1>Share Your AI Experience</h1>
             <p class="subtitle">Your perspective matters. Help us understand how students really use AI.</p>
         </div>
 
-        <!-- Simple Progress -->
         <div class="progress-simple" id="progressBar">
             <div class="progress-dot active" data-step="1"></div>
             <div class="progress-line" data-line="1"></div>
@@ -995,18 +1012,17 @@
                    What did you notice? For example, did you feel rushed? Did the AI miss your point, or give you a great answer like an expert?<br>Click a circle to add an observation.
                 </p>
 
-                <!-- Circular Guided Steps -->
                 <div class="guided-steps-container" id="currentGuidedSteps">
                     <div class="guided-step-circle human" id="currentAddHumanBtn">
                         <span class="step-icon">🧠</span>
                         <span class="step-label">About Me</span>
-                        <span class="step-hint">My thoughts, intentions, habits, or choices (E.g., I asked good follow-ups, I trusted it without checking)</span>
+                        <span class="step-hint">My thoughts, intentions, or habits (E.g., asked good follow-ups, trusted without checking)</span>
                     </div>
                     
                     <div class="guided-step-circle ai" id="currentAddAIBtn">
                         <span class="step-icon">🤖</span>
                         <span class="step-label">About the AI</span>
-                        <span class="step-hint">What the AI did or said (E.g., It explained clearly, It sounded confident but was wrong)</span>
+                        <span class="step-hint">What the AI did or said (E.g., explained clearly, sounded confident but wrong)</span>
                     </div>
 
                     <div class="guided-step-circle any" id="currentAddAnyBtn" style="display: none;">
@@ -1025,7 +1041,6 @@
                 </button>
             </div>
 
-            <!-- Connection Mapping -->
             <div id="currentMappingSection" style="display: none;">
                 <div class="panel">
                     <h2 class="panel-title">How are they related?</h2>
@@ -1079,7 +1094,7 @@
                 <div class="form-group">
                     <label class="form-label">In this future, what would a "good" AI use look like?</label>
                     <textarea class="form-textarea" id="futureContext" 
-                              placeholder=Share freely: How would you feel? What would AI help you do or become? What would make it trustworthy?"></textarea>
+                              placeholder="Share freely: How would you feel? What would AI help you do or become? What would make it trustworthy?"></textarea>
                 </div>
 
                 <div class="form-group">
@@ -1094,7 +1109,6 @@
                     What would you and the AI each need to do to create your ideal experience?
                 </p>
 
-                <!-- Circular Guided Steps -->
                 <div class="guided-steps-container" id="futureGuidedSteps">
                     <div class="guided-step-circle human" id="futureAddHumanBtn">
                         <span class="step-icon">🧠</span>
@@ -1124,7 +1138,6 @@
                 </button>
             </div>
 
-            <!-- Connection Mapping -->
             <div id="futureMappingSection" style="display: none;">
                 <div class="panel">
                     <h2 class="panel-title">How would these work together?</h2>
@@ -1197,13 +1210,13 @@
                         <option value="connections">Seeing how AI and I relate to each other</option>
                         <option value="reflection">Taking time to reflect on AI use</option>
                         <option value="agency">Realizing I have more influence than I thought</option>
-                       <option value="other">Something else</option>
+                        <option value="other">Something else</option>
                     </select>
                 </div>
 
-                <div class="form-group" id="afterOtherGroup" style="display: none;">
+                <div class="form-group" id="valuableOtherGroup" style="display: none;">
                     <label class="form-label">Please describe</label>
-                    <input type="text" class="form-input" id="afterMentalModelOther">
+                    <input type="text" class="form-input" id="reflectionValuableOther">
                 </div>
 
                 <div class="form-group">
@@ -1214,8 +1227,8 @@
                             <span>It was hard to follow the instructions</span>
                         </label>
                         <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
-                            <input type="checkbox" id="feedbackClear" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
-                            <span>During the connecting exercise, it felt difficult to create individual notes </span>
+                            <input type="checkbox" id="feedbackValue" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
+                            <span>During the connecting exercise, it felt difficult to create individual notes</span>
                         </label>
                         <label style="display: flex; align-items: flex-start; gap: 0.6rem; cursor: pointer; font-size: 0.9rem;">
                             <input type="checkbox" id="feedbackPrompts" style="width: 16px; height: 16px; margin-top: 2px; cursor: pointer;">
@@ -1276,21 +1289,27 @@
             </div>
         </div>
 
-        <!-- Selection Notice -->
         <div id="selectionNotice" class="selection-notice">
             <span id="selectedNodeName"></span> selected. Click another to connect.
             <button class="btn-secondary" id="cancelSelectionBtn" style="padding: 0.4rem 0.75rem; font-size: 0.8rem;">Cancel</button>
         </div>
     </div>
 
-    <!-- Node Modal -->
-    <div id="nodeModal" class="modal">
+    <!-- Current Scenario Modal (with sentiment) -->
+    <div id="currentNodeModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="modalTitle">Add a thought</h3>
+                <h3 class="modal-title" id="currentModalTitle">Add a thought</h3>
             </div>
 
-            <div class="form-group">
+            <!-- Type indicator (shown when type is pre-selected) -->
+            <div id="currentTypeIndicator" class="modal-type-indicator human" style="display: none;">
+                <span id="currentTypeIcon">🧠</span>
+                <span id="currentTypeLabel">You</span>
+            </div>
+
+            <!-- Type selector (shown for "Add More") -->
+            <div class="form-group" id="currentTypeSelector" style="display: none;">
                 <label class="form-label">This note is about:</label>
                 <div class="type-selector">
                     <div class="type-card human" data-type="human">
@@ -1308,7 +1327,7 @@
 
             <div class="form-group">
                 <label class="form-label">How would you evaluate it?</label>
-                <div class="sentiment-selector">
+                <div class="sentiment-selector" id="currentSentimentSelector">
                     <div class="sentiment-card" data-sentiment="helpful">
                         <div class="sentiment-emoji">✨</div>
                         <div class="sentiment-label">Positive (Helpful, efficient, satisfying)</div>
@@ -1326,20 +1345,72 @@
 
             <div class="form-group">
                 <label class="form-label">Describe it in a word or short phrase</label>
-                <input type="text" class="form-input" id="nodeName">
+                <input type="text" class="form-input" id="currentNodeName">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Describe your thought</label>
-                <textarea class="form-textarea" id="nodeDescription" 
+                <textarea class="form-textarea" id="currentNodeDescription" 
                           placeholder="What happened? Why does it matter?"></textarea>
             </div>
 
             <div class="btn-group">
-                <button class="btn-primary" id="saveNodeBtn" style="flex: 1;">
+                <button class="btn-primary" id="saveCurrentNodeBtn" style="flex: 1;">
                     Save
                 </button>
-                <button class="btn-secondary" id="cancelNodeBtn">
+                <button class="btn-secondary" id="cancelCurrentNodeBtn">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Future Scenario Modal (simplified, no sentiment) -->
+    <div id="futureNodeModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="futureModalTitle">Add a thought</h3>
+            </div>
+
+            <!-- Type indicator (shown when type is pre-selected) -->
+            <div id="futureTypeIndicator" class="modal-type-indicator human" style="display: none;">
+                <span id="futureTypeIcon">🧠</span>
+                <span id="futureTypeLabel">You</span>
+            </div>
+
+            <!-- Type selector (shown for "Add More") -->
+            <div class="form-group" id="futureTypeSelector" style="display: none;">
+                <label class="form-label">This note is about:</label>
+                <div class="type-selector">
+                    <div class="type-card human" data-type="human">
+                        <div class="type-emoji">🧠</div>
+                        <div class="type-label">You</div>
+                        <p class="type-description">What I do, think, or feel when using AI</p>
+                    </div>
+                    <div class="type-card ai" data-type="ai">
+                        <div class="type-emoji">🤖</div>
+                        <div class="type-label">AI</div>
+                        <p class="type-description">What the AI do or how it would behave</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Describe it in a word or short phrase</label>
+                <input type="text" class="form-input" id="futureNodeName">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Describe your thought</label>
+                <textarea class="form-textarea" id="futureNodeDescription" 
+                          placeholder="What happened? Why does it matter?"></textarea>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="saveFutureNodeBtn" style="flex: 1;">
+                    Save
+                </button>
+                <button class="btn-secondary" id="cancelFutureNodeBtn">
                     Cancel
                 </button>
             </div>
@@ -1397,7 +1468,8 @@
     </div>
 
     <!-- Hidden Netlify Form -->
-    <form name="ai-experience-mapping" netlify netlify-honeypot="bot-field" hidden>
+    <form name="ai-experience-mapping" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="ai-experience-mapping">
         <input type="text" name="timestamp">
         <input type="text" name="sessionId">
         <textarea name="demographics"></textarea>
@@ -1447,6 +1519,11 @@
             }
         };
 
+        // Modal state
+        let currentModalType = null;
+        let currentModalSentiment = null;
+        let futureModalType = null;
+
         // ===============================================
         // UTILITY FUNCTIONS
         // ===============================================
@@ -1490,7 +1567,6 @@
             
             document.getElementById('chapter-' + chapterNum).classList.add('active');
             
-            // Update simple progress dots
             document.querySelectorAll('.progress-dot').forEach((dot, index) => {
                 const stepNum = index + 1;
                 dot.classList.remove('active', 'completed');
@@ -1541,7 +1617,7 @@
                             <span class="node-type-badge ${node.type}">
                                 ${node.type === 'human' ? '🧠 You' : '🤖 AI'}
                             </span>
-                            <span style="font-size: 1rem;">${sentimentEmojis[node.sentiment]}</span>
+                            ${node.sentiment ? `<span style="font-size: 1rem;">${sentimentEmojis[node.sentiment]}</span>` : ''}
                         </div>
                         <h4 class="node-name">${node.name}</h4>
                         <p class="node-description">${node.description}</p>
@@ -1575,7 +1651,13 @@
         window.editNode = function(scenarioName, nodeId) {
             appState.activeScenario = scenarioName;
             const node = appState.scenarios[scenarioName].nodes.find(n => n.id === nodeId);
-            if (node) openNodeModal(node);
+            if (node) {
+                if (scenarioName === 'current') {
+                    openCurrentNodeModal(node.type, node);
+                } else {
+                    openFutureNodeModal(node.type, node);
+                }
+            }
         };
 
         window.deleteNode = function(scenarioName, nodeId) {
@@ -1590,50 +1672,135 @@
         };
 
         // ===============================================
-        // NODE MODAL
+        // CURRENT SCENARIO NODE MODAL (with sentiment)
         // ===============================================
         
-        let selectedType = null;
-        let selectedSentiment = null;
-
-        function openNodeModal(nodeToEdit = null, preselectedType = null) {
-            selectedType = null;
-            selectedSentiment = null;
+        function openCurrentNodeModal(type, nodeToEdit = null, showTypeSelector = false) {
+            currentModalType = type;
+            currentModalSentiment = null;
             
-            if (nodeToEdit) {
-                getCurrentScenario().editingNode = nodeToEdit;
-                document.getElementById('modalTitle').textContent = 'Edit Pattern';
-                document.getElementById('nodeName').value = nodeToEdit.name;
-                document.getElementById('nodeDescription').value = nodeToEdit.description;
-                selectedType = nodeToEdit.type;
-                selectedSentiment = nodeToEdit.sentiment;
-                
-                document.querySelectorAll('.type-card').forEach(card => {
-                    card.classList.toggle('selected', card.dataset.type === nodeToEdit.type);
-                });
-                document.querySelectorAll('#nodeModal .sentiment-card').forEach(card => {
-                    card.classList.toggle('selected', card.dataset.sentiment === nodeToEdit.sentiment);
-                });
+            const indicator = document.getElementById('currentTypeIndicator');
+            const selector = document.getElementById('currentTypeSelector');
+            const icon = document.getElementById('currentTypeIcon');
+            const label = document.getElementById('currentTypeLabel');
+            
+            document.querySelectorAll('#currentTypeSelector .type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            if (showTypeSelector) {
+                indicator.style.display = 'none';
+                selector.style.display = 'block';
+                currentModalType = null;
             } else {
-                getCurrentScenario().editingNode = null;
-                document.getElementById('modalTitle').textContent = 'Create a Pattern';
-                document.getElementById('nodeName').value = '';
-                document.getElementById('nodeDescription').value = '';
-                document.querySelectorAll('.type-card, #nodeModal .sentiment-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
+                indicator.style.display = 'flex';
+                selector.style.display = 'none';
                 
-                if (preselectedType) {
-                    selectedType = preselectedType;
-                    document.querySelectorAll('.type-card').forEach(card => {
-                        if (card.dataset.type === preselectedType) {
-                            card.classList.add('selected');
-                        }
-                    });
+                indicator.className = 'modal-type-indicator ' + type;
+                if (type === 'human') {
+                    icon.textContent = '🧠';
+                    label.textContent = 'You';
+                } else {
+                    icon.textContent = '🤖';
+                    label.textContent = 'AI';
                 }
             }
             
-            document.getElementById('nodeModal').classList.add('active');
+            document.querySelectorAll('#currentSentimentSelector .sentiment-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            if (nodeToEdit) {
+                appState.scenarios.current.editingNode = nodeToEdit;
+                document.getElementById('currentModalTitle').textContent = 'Edit Pattern';
+                document.getElementById('currentNodeName').value = nodeToEdit.name;
+                document.getElementById('currentNodeDescription').value = nodeToEdit.description;
+                currentModalSentiment = nodeToEdit.sentiment;
+                currentModalType = nodeToEdit.type;
+                
+                indicator.style.display = 'flex';
+                selector.style.display = 'none';
+                indicator.className = 'modal-type-indicator ' + nodeToEdit.type;
+                if (nodeToEdit.type === 'human') {
+                    icon.textContent = '🧠';
+                    label.textContent = 'You';
+                } else {
+                    icon.textContent = '🤖';
+                    label.textContent = 'AI';
+                }
+                
+                document.querySelectorAll('#currentSentimentSelector .sentiment-card').forEach(card => {
+                    card.classList.toggle('selected', card.dataset.sentiment === nodeToEdit.sentiment);
+                });
+            } else {
+                appState.scenarios.current.editingNode = null;
+                document.getElementById('currentModalTitle').textContent = 'Add a thought';
+                document.getElementById('currentNodeName').value = '';
+                document.getElementById('currentNodeDescription').value = '';
+            }
+            
+            document.getElementById('currentNodeModal').classList.add('active');
+        }
+
+        // ===============================================
+        // FUTURE SCENARIO NODE MODAL (simplified)
+        // ===============================================
+        
+        function openFutureNodeModal(type, nodeToEdit = null, showTypeSelector = false) {
+            futureModalType = type;
+            
+            const indicator = document.getElementById('futureTypeIndicator');
+            const selector = document.getElementById('futureTypeSelector');
+            const icon = document.getElementById('futureTypeIcon');
+            const label = document.getElementById('futureTypeLabel');
+            
+            document.querySelectorAll('#futureTypeSelector .type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            if (showTypeSelector) {
+                indicator.style.display = 'none';
+                selector.style.display = 'block';
+                futureModalType = null;
+            } else {
+                indicator.style.display = 'flex';
+                selector.style.display = 'none';
+                
+                indicator.className = 'modal-type-indicator ' + type;
+                if (type === 'human') {
+                    icon.textContent = '🧠';
+                    label.textContent = 'You';
+                } else {
+                    icon.textContent = '🤖';
+                    label.textContent = 'AI';
+                }
+            }
+            
+            if (nodeToEdit) {
+                appState.scenarios.future.editingNode = nodeToEdit;
+                document.getElementById('futureModalTitle').textContent = 'Edit Pattern';
+                document.getElementById('futureNodeName').value = nodeToEdit.name;
+                document.getElementById('futureNodeDescription').value = nodeToEdit.description;
+                futureModalType = nodeToEdit.type;
+                
+                indicator.style.display = 'flex';
+                selector.style.display = 'none';
+                indicator.className = 'modal-type-indicator ' + nodeToEdit.type;
+                if (nodeToEdit.type === 'human') {
+                    icon.textContent = '🧠';
+                    label.textContent = 'You';
+                } else {
+                    icon.textContent = '🤖';
+                    label.textContent = 'AI';
+                }
+            } else {
+                appState.scenarios.future.editingNode = null;
+                document.getElementById('futureModalTitle').textContent = 'Add a thought';
+                document.getElementById('futureNodeName').value = '';
+                document.getElementById('futureNodeDescription').value = '';
+            }
+            
+            document.getElementById('futureNodeModal').classList.add('active');
         }
 
         // ===============================================
@@ -1894,15 +2061,18 @@
                 document.getElementById('afterOtherGroup').style.display = this.value === 'other' ? 'block' : 'none';
             });
 
+            document.getElementById('reflectionValuable').addEventListener('change', function() {
+                document.getElementById('valuableOtherGroup').style.display = this.value === 'other' ? 'block' : 'none';
+            });
+
             document.getElementById('continueToCurrentBtn').addEventListener('click', function() {
                 const university = document.getElementById('university').value;
                 const field = document.getElementById('field').value;
                 const year = document.getElementById('year').value;
                 const beforeMentalModel = document.getElementById('beforeMentalModel').value;
-                const aiToolsUsed = document.getElementById('aiToolsUsed').value;
                 const aiExperience = document.getElementById('aiExperience').value;
                 
-                if (!university || !field || !year || !beforeMentalModel || !aiToolsUsed || !aiExperience) {
+                if (!university || !field || !year || !beforeMentalModel || !aiExperience) {
                     alert('Please complete all fields.');
                     return;
                 }
@@ -1911,7 +2081,6 @@
                 appState.beforePerspectives = {
                     mentalModel: beforeMentalModel,
                     mentalModelOther: document.getElementById('beforeMentalModelOther').value,
-                    aiToolsUsed: aiToolsUsed,
                     aiExperience: aiExperience
                 };
                 
@@ -1922,17 +2091,17 @@
             // Chapter 3 - Current Scenario Node Buttons
             document.getElementById('currentAddHumanBtn').addEventListener('click', function() {
                 appState.activeScenario = 'current';
-                openNodeModal(null, 'human');
+                openCurrentNodeModal('human');
             });
 
             document.getElementById('currentAddAIBtn').addEventListener('click', function() {
                 appState.activeScenario = 'current';
-                openNodeModal(null, 'ai');
+                openCurrentNodeModal('ai');
             });
 
             document.getElementById('currentAddAnyBtn').addEventListener('click', function() {
                 appState.activeScenario = 'current';
-                openNodeModal();
+                openCurrentNodeModal(null, null, true);
             });
 
             document.getElementById('currentContinueToMappingBtn').addEventListener('click', function() {
@@ -1957,17 +2126,17 @@
             // Chapter 4 - Future Scenario Node Buttons
             document.getElementById('futureAddHumanBtn').addEventListener('click', function() {
                 appState.activeScenario = 'future';
-                openNodeModal(null, 'human');
+                openFutureNodeModal('human');
             });
 
             document.getElementById('futureAddAIBtn').addEventListener('click', function() {
                 appState.activeScenario = 'future';
-                openNodeModal(null, 'ai');
+                openFutureNodeModal('ai');
             });
 
             document.getElementById('futureAddAnyBtn').addEventListener('click', function() {
                 appState.activeScenario = 'future';
-                openNodeModal();
+                openFutureNodeModal(null, null, true);
             });
 
             document.getElementById('futureContinueToMappingBtn').addEventListener('click', function() {
@@ -1989,37 +2158,39 @@
                 switchChapter(5);
             });
 
-            // Node Modal
-            document.querySelectorAll('.type-card').forEach(card => {
+            // Current Node Modal - Type selector
+            document.querySelectorAll('#currentTypeSelector .type-card').forEach(card => {
                 card.addEventListener('click', function() {
-                    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+                    document.querySelectorAll('#currentTypeSelector .type-card').forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
-                    selectedType = this.dataset.type;
+                    currentModalType = this.dataset.type;
                 });
             });
 
-            document.querySelectorAll('#nodeModal .sentiment-card').forEach(card => {
+            // Current Node Modal - Sentiment selector
+            document.querySelectorAll('#currentSentimentSelector .sentiment-card').forEach(card => {
                 card.addEventListener('click', function() {
-                    document.querySelectorAll('#nodeModal .sentiment-card').forEach(c => c.classList.remove('selected'));
+                    document.querySelectorAll('#currentSentimentSelector .sentiment-card').forEach(c => c.classList.remove('selected'));
                     this.classList.add('selected');
-                    selectedSentiment = this.dataset.sentiment;
+                    currentModalSentiment = this.dataset.sentiment;
                 });
             });
 
-            document.getElementById('saveNodeBtn').addEventListener('click', function() {
-                const name = document.getElementById('nodeName').value.trim();
-                const description = document.getElementById('nodeDescription').value.trim();
+            // Current Node Modal - Save
+            document.getElementById('saveCurrentNodeBtn').addEventListener('click', function() {
+                const name = document.getElementById('currentNodeName').value.trim();
+                const description = document.getElementById('currentNodeDescription').value.trim();
                 
-                if (!selectedType || !selectedSentiment || !name || !description) {
+                if (!currentModalType || !currentModalSentiment || !name || !description) {
                     alert('Please complete all fields.');
                     return;
                 }
                 
-                const scenario = getCurrentScenario();
+                const scenario = appState.scenarios.current;
                 const node = {
                     id: scenario.editingNode ? scenario.editingNode.id : Date.now(),
-                    type: selectedType,
-                    sentiment: selectedSentiment,
+                    type: currentModalType,
+                    sentiment: currentModalSentiment,
                     name: name,
                     description: description,
                     createdAt: scenario.editingNode ? scenario.editingNode.createdAt : Date.now()
@@ -2034,12 +2205,58 @@
                     logEdit('create_node', node);
                 }
                 
-                document.getElementById('nodeModal').classList.remove('active');
-                renderNodesGallery(appState.activeScenario);
+                document.getElementById('currentNodeModal').classList.remove('active');
+                renderNodesGallery('current');
             });
 
-            document.getElementById('cancelNodeBtn').addEventListener('click', function() {
-                document.getElementById('nodeModal').classList.remove('active');
+            document.getElementById('cancelCurrentNodeBtn').addEventListener('click', function() {
+                document.getElementById('currentNodeModal').classList.remove('active');
+            });
+
+            // Future Node Modal - Type selector
+            document.querySelectorAll('#futureTypeSelector .type-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('#futureTypeSelector .type-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    futureModalType = this.dataset.type;
+                });
+            });
+
+            // Future Node Modal - Save
+            document.getElementById('saveFutureNodeBtn').addEventListener('click', function() {
+                const name = document.getElementById('futureNodeName').value.trim();
+                const description = document.getElementById('futureNodeDescription').value.trim();
+                
+                if (!futureModalType || !name || !description) {
+                    alert('Please complete all fields.');
+                    return;
+                }
+                
+                const scenario = appState.scenarios.future;
+                const node = {
+                    id: scenario.editingNode ? scenario.editingNode.id : Date.now(),
+                    type: futureModalType,
+                    sentiment: null,
+                    name: name,
+                    description: description,
+                    createdAt: scenario.editingNode ? scenario.editingNode.createdAt : Date.now()
+                };
+                
+                if (scenario.editingNode) {
+                    const index = scenario.nodes.findIndex(n => n.id === scenario.editingNode.id);
+                    scenario.nodes[index] = node;
+                    logEdit('edit_node', node);
+                } else {
+                    scenario.nodes.push(node);
+                    logEdit('create_node', node);
+                }
+                
+                document.getElementById('futureNodeModal').classList.remove('active');
+                renderNodesGallery('future');
+            });
+
+            document.getElementById('cancelFutureNodeBtn').addEventListener('click', function() {
+                document.getElementById('futureNodeModal').classList.remove('active');
             });
 
             // Connection Modal
@@ -2099,12 +2316,13 @@
                     afterMentalModel: document.getElementById('afterMentalModel').value,
                     afterMentalModelOther: document.getElementById('afterMentalModelOther').value,
                     valuable: document.getElementById('reflectionValuable').value,
+                    valuableOther: document.getElementById('reflectionValuableOther').value,
                     feedback: {
                         helpedNotice: document.getElementById('feedbackClear').checked,
+                        unclearValue: document.getElementById('feedbackValue').checked,
                         unclearPattern: document.getElementById('feedbackPrompts').checked,
                         moreReflection: document.getElementById('feedbackReflection').checked,
-                        futureHard: document.getElementById('feedbackFuture').checked,
-                        unclearValue: document.getElementById('feedbackValue').checked
+                        futureHard: document.getElementById('feedbackFuture').checked
                     },
                     stats: {
                         currentNodes: appState.scenarios.current.nodes.length,
